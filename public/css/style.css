@@ -1,0 +1,10 @@
+img{
+    width: 25%;
+}
+#combat{
+    width: 80%;
+    margin: 2% 10%;
+    height:90vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
