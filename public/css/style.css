@@ -2,9 +2,32 @@ img{
     width: 25%;
 }
 #combat{
-    width: 80%;
-    margin: 2% 10%;
-    height:90vh;
+    padding: 0;
+    width: 60%;
+    margin: 2% auto;
+    height:80vh;
     background-repeat: no-repeat;
     background-size: cover;
+    border: 10px groove rgb(85, 193, 255);
+    position: relative;
+}
+#poke2{
+    position:absolute;
+    right:5%;
+    top:20%;
+}
+#pokeNom2{
+    position:absolute;
+    right:2%;
+    top:0;
+}
+#poke1{
+    position:absolute;
+    bottom:20%;
+    left:10%;
+}
+#pokeNom1{
+    position: absolute;
+    bottom: 0;
+    left:2%
 }

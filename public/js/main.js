@@ -1,4 +1,4 @@
-import { pokemon1,pokemon2 } from "./modules/pokemons.js";
+import { pokemon1,pokemon1NomFr,pokemon2,pokemon2NomFr,pokemonHasard,Pokemon } from "./modules/pokemons.js";
 /**
  * Choix Arène 
  */
@@ -6,7 +6,6 @@ import { pokemon1,pokemon2 } from "./modules/pokemons.js";
 let arene = document.querySelector('#combat');
 let randA=Math.floor(Math.random()*5+1)
 arene.setAttribute('style',`background-image:url('public/images/terrain${randA}.png');`)
-console.log(arene.attributes);
 
 
 /**
@@ -14,22 +13,38 @@ console.log(arene.attributes);
  */
 console.log(pokemon1);
 let pokemon1I=document.createElement('img')
+pokemon1I.id='poke1';
+let nom1=document.createElement('h3')
+nom1.innerText=pokemon1NomFr;
+nom1.id='pokeNom1';
 let pokemon2I=document.createElement('img')
-let statPoke1 = `https://pokeapi.co/api/v2/stat/${pokemon1.id}`
+pokemon2I.id='poke2';
+let nom2=document.createElement('h3');
+nom2.innerText=pokemon2NomFr;
+nom2.id='pokeNom2';
+
+
+
+console.log(pokemonHasard(pokemon1.moves[0].move.url));
+let statPoke1 =await pokemonHasard(pokemon1.moves[0].move.url)
 console.log(statPoke1);
 
 console.log(pokemon1.stats);
 console.log(pokemon2.stats);
 
-if(Math.floor(Math.random()*2)==0){
+console.log(Math.floor(Math.random()*6+1));
+/**
+ *  Définition aux hasard si le pokemon est shiny
+ */
+if((Math.floor(Math.random()*6+1)%6)!=0){
     pokemon1I.src=`${pokemon1.sprites.back_default}`
 }else{
 pokemon1I.src=`${pokemon1.sprites.back_shiny}`
 }
-if(Math.floor(Math.random()*2)==0){
+if((Math.floor(Math.random()*6+1)%6)!=0){
     pokemon2I.src=`${pokemon2.sprites.front_default}`
 }else{
 pokemon2I.src=`${pokemon2.sprites.front_shiny}`
 }
 
-combat.append(pokemon1I,pokemon2I);
+combat.append(pokemon1I,nom1,pokemon2I,nom2);
