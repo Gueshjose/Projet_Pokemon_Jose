@@ -42,10 +42,7 @@ export class Pokemon {
     }
     async calculeStats(stats) { //Methods de calcul des stats
         for (let i = 0; i < stats.length; i++) {
-            console.log(stats[i]);
-            console.log(i);
             await(this.stats[i] = Math.floor(((this.iV[i] + 2 * stats[i] + (this.eV[i] / 4)) * this.lvl / 100)));
-            await (console.log('hi ' + this.stats[i]));
         }
         this.stats[0] += +this.lvl + 10;
     }
