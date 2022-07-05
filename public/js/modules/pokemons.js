@@ -1,17 +1,71 @@
+let lvl = Math.floor(Math.random() * (96) + 4); //Niveau max moyen aux hazard
 
 
-let rand1=Math.floor(Math.random() * 905+1);
-let rand2=Math.floor(Math.random() * 905+1);
+/**
+ * Création classe pokemon
+ */
 
-export let pokemon1=await pokemonHasard(`https://pokeapi.co/api/v2/pokemon/${rand1}`); //Création du premier Pokemon
-export let pokemon2=await pokemonHasard(`https://pokeapi.co/api/v2/pokemon/${rand2}`);// Création du deuxième Pokemon 
-export let pokemon1NomFr = (await pokemonHasard(`https://pokeapi.co/api/v2/pokemon-species/${rand1}`)).names[4].name;//Récupération du nom FR du pokemon 1
-export let pokemon2NomFr = (await pokemonHasard(`https://pokeapi.co/api/v2/pokemon-species/${rand2}`)).names[4].name;//Récupération du nom FR du pokemon 2
-// pokemon1NomFr= pokemon1NomFr.names[4].name
-// pokemon2NomFr= pokemon1NomFr.names[4].name
 
-console.log(pokemon1NomFr);
-console.log(pokemon2NomFr);
+export class Pokemon {
+    constructor() {
+        this.nom;
+        this.lvl;
+        this.sprites=[];
+        this.types = [];
+        this.attaques = [];
+        this.stats = [];
+        this.iV = [];
+        this.eV = [];
+    }
+    getNom(){
+        return this.nom;
+    }
+    calculerIV() {//Méthod pour définir les IV's
+        for (let i = 0; i <= 5; i++) {
+            this.iV[i] = Math.floor(Math.random() * 31);
+        }
+    }
+    calculerEV() { //Méthod pour définir les EV's
+        let evMax = 510;
+        let rand = 0;
+        let i=0;
+        while (evMax != 0 && this.eV.length < 5) {
+            rand = Math.floor(Math.random() * 253);
+            while (rand > evMax || (evMax-rand)<0) {
+                rand = Math.floor(Math.random() * 253);
+            }
+            this.eV[i] = rand;
+            evMax-=rand
+            i++;
+
+        }
+    }
+    async calculeStats(stats) { //Methods de calcul des stats
+        for (let i = 0; i < stats.length; i++) {
+            console.log(stats[i]);
+            this.stats[i] = await Math.floor(((this.iV[i] + 2 * stats[i] + (this.eV[i] / 4)) * this.lvl / 100));
+            console.log('hi ' + this.stats[i]);
+        }
+        this.stats[0] += +this.lvl + 10;
+    }
+    async attaqueHasard(pokemon) { //Methods de d'attaque aux hasard
+        let atkPoke;
+        let idAtk;
+        for (let i = 0; i < 4; i++) {
+            idAtk=Math.floor(Math.random()*pokemon.moves.length);
+            atkPoke = await pokemonHasard(pokemon.moves[idAtk].move.url);
+            this.attaques[i] = await[atkPoke.names[3].name, atkPoke.pp , atkPoke.power, atkPoke.damage_class.name, atkPoke.type.name]
+        }
+    }
+}
+
+
+export let pokemon1 = new Pokemon; //Création du premier Pokemon
+await creaPokemon(pokemon1, lvl); //Instancie le pokemon 1 
+export let pokemon2 = new Pokemon; // Création du deuxième Pokemon 
+await creaPokemon(pokemon2, lvl); //Instancie le pokemon 2 
+
+
 
 /**
  * 
@@ -24,66 +78,50 @@ export async function pokemonHasard(pokemon) {
             return responseJson
         })
         .then(data => {
-            pokemon= data;
+            pokemon = data;
         })
         .catch(error => {
             console.error(error)
         })
-            return pokemon
+    return pokemon
 }
 
 
 /**
- * Fonctions de création des stats du pokemon
+ * Fonction de création de pokemon 
  */
+async function creaPokemon(pokemon, niv) {
+    let rand = Math.floor(Math.random() * 905 + 1);
+    //Choix du pokemon aux hasard
 
-/**
- * Fonction pour les pv
- */
+    let pokeObjt = (await  pokemonHasard(`https://pokeapi.co/api/v2/pokemon/${rand}`)); //Appel de l'api Pokeapi
+    let nomPoke = (await pokemonHasard(`https://pokeapi.co/api/v2/pokemon-species/${rand}`));
+    pokemon.nom =await  nomPoke.names[4].name; //On donne le nom en vf
+    pokemon.lvl =await  Math.floor(Math.random() * ((niv + 3) - (niv - 3) + 1) + (niv - 3));//Niveau aux hasard compris aux niveau general à -3 , +3 
+    
+    /**
+     *  Définition du sprite (normal ou shiny)
+     */
+    if ((Math.floor(Math.random() * 10 + 1) % 10) != 0) {
+        pokemon.sprites.push(`${pokeObjt.sprites.back_default}`,`${pokeObjt.sprites.front_default}`);//Sprites normal
+    } else {
+        pokemon.sprites.push(`${pokeObjt.sprites.back_shiny}`,`${pokeObjt.sprites.front_shiny}`);//sprites shiny
+    }
+    
 
-/**
- * Fonction pour les autres stats
- */
+    /**
+     * ajout du/des type(s)
+     */
+    for (let i = 0; i < pokeObjt.types.length; i++) {
+        pokemon.types=pokeObjt.types[i].type.name;        
+    }
+    
 
-export class Pokemon{
-    constructor(){
-        this.nom;
-        this.lvl;
-        this.sprite;
-        this.types=[];
-        this.attaques=[];
-        this.stats=[];
-        this.iV=[];
-        this.eV=[];
-    }
-    calculerIV(){
-        for (let i = 0; i <= 5; i++) {
-            this.iV[i]=Math.floor(Math.random()*31);            
-        }
-    }
-    calculerEV(pv,atk,atkS,def,defS,vit){
-        let evMax=510;
-        let rand=0;
-        while (evMaw!=0 && this.eV.length < 5) {
-               rand=Math.floor(Math.random()*253);
-               while (rand>evMax) {
-                rand=Math.floor(Math.random()*253);
-               }   
-               this.eV[i]=rand;    
-            
-        }
-    }
-    calculeStats(stats){
-        for (let i = 0; i < stats.length; i++) {
-            this.stats[i]=Math.floor(((this.iV[i]+ 2 * stats[i] +(this.eV[i]/4))*this.lvl/100));            
-        }
-        this.stats[0]+=+this.lvl+10;
-    }
-    attaqueHasard(pokemon){
-        let atkPoke;
-        for (let i = 0; i < 4; i++) {
-            atkPoke =pokemonHasard(pokemon.moves[0].move.url);
-            this.attaques[i]=[atkPoke.names[3].name,atkPoke.pp,,atkPoke.power,atkPoke.damage_class.name,atkPoke.type.name]
-        }
-    }
+    pokemon.calculerIV();
+
+    pokemon.calculerEV()
+    pokemon.attaqueHasard(pokeObjt);
+    let statBase =[pokeObjt.stats[0].base_stat,pokeObjt.stats[1].base_stat,pokeObjt.stats[2].base_stat,pokeObjt.stats[3].base_stat,pokeObjt.stats[4].base_stat,pokeObjt.stats[5].base_stat];
+    pokemon.calculeStats(statBase)
 }
+
