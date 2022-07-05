@@ -1,33 +1,192 @@
+/* Dimensionnement des pokemon */
 img{
     width: 25%;
 }
+
+/* Style de la div combat */
 #combat{
     padding: 0;
     width: 60%;
-    margin: 2% auto;
-    height:80vh;
+    margin: 1% auto;
+    height:75vh;
     background-repeat: no-repeat;
     background-size: cover;
-    border: 10px groove rgb(85, 193, 255);
+    border: 5px groove rgb(85, 193, 255);
     position: relative;
+    overflow: hidden;
 }
-#poke2{
-    position:absolute;
-    right:5%;
-    top:20%;
-}
-#pokeNom2{
-    position:absolute;
-    right:2%;
-    top:0;
-}
+
+/* placement pokemon 1 */
 #poke1{
     position:absolute;
     bottom:20%;
     left:10%;
 }
-#pokeNom1{
+
+/* placement pokemon 2 */
+#poke2{
+    position:absolute;
+    right:5%;
+    top:20%;
+}
+
+/* Style général des div info pokemon */
+.infoPoke{
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 0 2%;
+    
+}
+
+/* style pour l'info du pokemon 1 */
+#infoPoke1{
     position: absolute;
     bottom: 0;
-    left:2%
+    left:0;
+    box-shadow: 2px -2px 5px black;
+}
+
+/* style pour l'info du pokemon 2 */
+
+#infoPoke2{
+    position:absolute;
+    right:0;
+    top:0;
+    text-align: end;
+    box-shadow: 2px 2px 5px black;
+}
+
+/* Style pour les noms des pokemon */
+h3{
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 2vw;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+    color: rgba(18, 191, 222, 0.4);
+}
+
+/* style pour les pv du pokemon 1 */
+#pokeVie1{
+    width:45%;
+    position: absolute;
+    top:35%;
+    right: 10%;
+}
+
+/* style pour les pv du pokemon 1 */
+#pokeVie2{
+    width:45%;
+    position: absolute;
+    top:35%;
+    left: 10%;
+}
+/* Style barre de vie */
+progress{
+    height:30%;
+    -webkit-appearance: none;
+     
+}
+::-webkit-progress-value {
+    background-color: greenyellow;
+    border-radius: 25px;
+    box-shadow: 1px 1px 2px 1px rgba( 0, 0, 0, 0.5 );
+  }
+  ::-webkit-progress-bar {
+    border-radius: 25px;
+    background-color: rgba( 0, 0, 0, 0.3 );
+ }
+
+ /* Style pour le text de la vie pokemon 1*/
+ #infoPoke1 p{
+    position:absolute;
+    display: inline-block;
+    width:25%;
+    z-index:2;
+    top:18%;
+    left:54%;
+    text-align: center;
+    text-shadow: 1px 1px 2px white;
+    font-size: 1.3vw;
+ }
+
+ /* Style pour le text de la vie pokemon 1*/
+
+ #infoPoke2 p{
+    position:absolute;
+    display: inline-block;
+    width:25%;
+    z-index:2;
+    top:18%;
+    right:54%;
+    text-align: center;
+    text-shadow: 1px 1px 2px white;
+    font-size: 1.3vw;
+
+ }
+
+#action{
+    padding: 0 ;
+    width: 60%;
+    margin: 1% auto;
+    height:15vh;
+    background-image: url('../images/pokeball.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+    border: 5px groove rgb(85, 193, 255);
+    overflow: hidden;
+}
+ /* style des blocs d'action/attaques */
+.actionC{
+    width: 20%;
+    height: 10vh;
+    display: inline-block;
+    position: relative;
+    margin:2% 2%;
+    text-align: center;
+    text-transform: uppercase;
+    z-index: 2;
+    background-color: rgba(248, 247, 247, 0.772);
+    border:1px double rgb(85, 193, 255);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Style pour les textes d'actions */
+.actionC p{
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    right:20%;
+    text-align: center;
+}
+/* Class pour les blocs d'action pas visible */
+.invisible{
+    display: none;
+}
+
+/* Style action attaque */
+#atk{
+    font-weight: bolder;
+    color: rgb(114, 7, 7);
+    text-shadow: 1px 1px 2px black;
+}
+
+/* style action sac */
+#sac{
+    font-weight: bolder;
+    color: rgb(154, 152, 21);
+    text-shadow: 1px 1px 2px black;
+}
+/* style action pokémon */
+#pkmn{
+    font-weight: bolder;
+    color: rgb(17, 91, 12);
+    text-shadow: 1px 1px 2px black;
+}
+/* Style pour l'action fuir */
+#fuir{
+    font-weight: bolder;
+    color: rgb(21, 7, 114);
+    text-shadow: 1px 1px 2px black;
 }

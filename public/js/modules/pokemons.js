@@ -15,7 +15,7 @@ export class Pokemon {
         this.attaques = [];
         this.stats = [];
         this.iV = [];
-        this.eV = [];
+        this.eV =[];
     }
     getNom(){
         return this.nom;
@@ -29,7 +29,7 @@ export class Pokemon {
         let evMax = 510;
         let rand = 0;
         let i=0;
-        while (evMax != 0 && this.eV.length < 5) {
+        while (evMax != 0 && this.eV.length < 6) {
             rand = Math.floor(Math.random() * 253);
             while (rand > evMax || (evMax-rand)<0) {
                 rand = Math.floor(Math.random() * 253);
@@ -43,8 +43,9 @@ export class Pokemon {
     async calculeStats(stats) { //Methods de calcul des stats
         for (let i = 0; i < stats.length; i++) {
             console.log(stats[i]);
-            this.stats[i] = await Math.floor(((this.iV[i] + 2 * stats[i] + (this.eV[i] / 4)) * this.lvl / 100));
-            console.log('hi ' + this.stats[i]);
+            console.log(i);
+            await(this.stats[i] = Math.floor(((this.iV[i] + 2 * stats[i] + (this.eV[i] / 4)) * this.lvl / 100)));
+            await (console.log('hi ' + this.stats[i]));
         }
         this.stats[0] += +this.lvl + 10;
     }
@@ -53,8 +54,8 @@ export class Pokemon {
         let idAtk;
         for (let i = 0; i < 4; i++) {
             idAtk=Math.floor(Math.random()*pokemon.moves.length);
-            atkPoke = await pokemonHasard(pokemon.moves[idAtk].move.url);
-            this.attaques[i] = await[atkPoke.names[3].name, atkPoke.pp , atkPoke.power, atkPoke.damage_class.name, atkPoke.type.name]
+            atkPoke =await pokemonHasard(pokemon.moves[idAtk].move.url);
+            this.attaques[i] = [atkPoke.names[3].name, atkPoke.pp , atkPoke.power, atkPoke.damage_class.name, atkPoke.type.name];
         }
     }
 }
@@ -122,6 +123,6 @@ async function creaPokemon(pokemon, niv) {
     pokemon.calculerEV()
     pokemon.attaqueHasard(pokeObjt);
     let statBase =[pokeObjt.stats[0].base_stat,pokeObjt.stats[1].base_stat,pokeObjt.stats[2].base_stat,pokeObjt.stats[3].base_stat,pokeObjt.stats[4].base_stat,pokeObjt.stats[5].base_stat];
-    pokemon.calculeStats(statBase)
+    await pokemon.calculeStats(statBase)
 }
 
